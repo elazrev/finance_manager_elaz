@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 222.2 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47% 11%;
+    --primary: 221.2 83.2% 50%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 47% 11%;
+    --muted: 210 30% 95%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 40% 94%;
+    --accent-foreground: 222.2 47% 11%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 221.2 83.2% 50%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 47% 6%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 47% 8%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 47% 8%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 62%;
+    --primary-foreground: 222.2 47% 11%;
+    --secondary: 217.2 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217.2 33% 17%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 63% 45%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 33% 17%;
+    --input: 217.2 33% 17%;
+    --ring: 217.2 91.2% 62%;
+  }
+}
+
+/* Theme color palettes – primary/accent hues per user preference */
+.theme-blue { --primary: 221.2 83.2% 50%; --primary-foreground: 210 40% 98%; --ring: 221.2 83.2% 50%; }
+.dark.theme-blue { --primary: 217.2 91.2% 62%; --primary-foreground: 222.2 47% 11%; --ring: 217.2 91.2% 62%; }
+
+.theme-amber { --primary: 38 92% 50%; --primary-foreground: 0 0% 100%; --ring: 38 92% 50%; }
+.dark.theme-amber { --primary: 43 96% 56%; --primary-foreground: 20 14% 4%; --ring: 43 96% 56%; }
+
+.theme-emerald { --primary: 160 84% 39%; --primary-foreground: 0 0% 100%; --ring: 160 84% 39%; }
+.dark.theme-emerald { --primary: 158 64% 52%; --primary-foreground: 0 0% 0%; --ring: 158 64% 52%; }
+
+.theme-violet { --primary: 263 70% 50%; --primary-foreground: 0 0% 100%; --ring: 263 70% 50%; }
+.dark.theme-violet { --primary: 263 70% 58%; --primary-foreground: 0 0% 100%; --ring: 263 70% 58%; }
+
+.theme-rose { --primary: 350 89% 60%; --primary-foreground: 0 0% 100%; --ring: 350 89% 60%; }
+.dark.theme-rose { --primary: 350 89% 65%; --primary-foreground: 0 0% 100%; --ring: 350 89% 65%; }
+
+.theme-slate { --primary: 215 28% 45%; --primary-foreground: 210 40% 98%; --ring: 215 28% 45%; }
+.dark.theme-slate { --primary: 215 20% 58%; --primary-foreground: 220 14% 10%; --ring: 215 20% 58%; }
+
+/* Font size scaling – app UI only, reset for print */
+:root { --app-font-size: 1; }
+.text-size-sm { --app-font-size: 0.9; }
+.text-size-md { --app-font-size: 1; }
+.text-size-lg { --app-font-size: 1.125; }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-size: calc(1rem * var(--app-font-size, 1));
+  }
+  /* Improve touch responsiveness on mobile */
+  @media (hover: none) and (pointer: coarse) {
+    button, a, [role="button"] {
+      -webkit-tap-highlight-color: transparent;
+    }
+  }
+}
+
+/* Safe area - applied via utility classes where needed (e.g. header on notched devices) */
+
+/* RTL Support */
+[dir="rtl"] {
+  direction: rtl;
+}
+
+[dir="ltr"] {
+  direction: ltr;
+}
+
+/* Print styles - hide app chrome, prevent blank second page on mobile */
+@media print {
+  html, body {
+    background: white !important;
+    min-height: auto !important;
+    height: auto !important;
+    font-size: 1rem !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  /* Collapse flex layout to content height - prevents empty second page on mobile PDF */
+  body .flex-1,
+  body [class*="min-h-screen"],
+  body main {
+    min-height: 0 !important;
+  }
+  body .flex-1 {
+    flex: 0 0 auto !important;
+  }
+}
+
+/* Landing page animations */
+@keyframes welcomeFade {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes subtitleFade {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes buttonsFade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes footerFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-landing-welcome {
+  animation: welcomeFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-landing-subtitle {
+  animation: subtitleFade 0.8s 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-landing-buttons {
+  animation: buttonsFade 0.6s 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-landing-footer {
+  animation: footerFade 0.8s 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
