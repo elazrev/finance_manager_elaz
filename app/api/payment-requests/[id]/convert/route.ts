@@ -68,8 +68,7 @@ export async function POST(
         items: pr.items,
         subtotal: pr.subtotal,
         total: pr.total,
-        payment_status: "paid",
-        paid_at: new Date().toISOString(),
+        payment_status: "pending",
         notes: pr.notes ? `הומר מדרישת תשלום ${pr.request_number}\n\n${pr.notes}` : `הומר מדרישת תשלום ${pr.request_number}`,
       })
       .select()
