@@ -1,15 +1,27 @@
-# פריסה ל-Vercel עם GitHub Actions
+# פריסה ל-Vercel
 
 מדריך להגדרת פריסה אוטומטית בכל push ל-`main`.
 
+**שיטת הפריסה:** Vercel מחובר ישירות ל-GitHub – כל push ל-`main` מפעיל פריסה אוטומטית.  
+**GitHub Actions** מריץ רק CI (lint + build) לוולידציה לפני שהקוד מגיע ל-main.
+
 ---
 
-## ⚠️ חובה: GitHub Secrets (לבילד ב-Actions)
+## שלב 1: חיבור הריפו ל-Vercel
 
-**אם הבילד נכשל עם "משתני סביבה של Supabase לא מוגדרים"** – השגיאה מתרחשת ב-**GitHub Actions** (לא ב-Vercel). הבילד רץ על שרתי GitHub וצריך את ה-Secrets משם.
+1. היכנס ל-[vercel.com](https://vercel.com) (חינמי עם חשבון GitHub)
+2. לחץ **Add New** → **Project**
+3. ייבא את הריפו `finance_manager_elaz` מ-GitHub
+4. **Deploy** – Vercel יפרוס אוטומטית בכל push ל-`main`
 
-1. **GitHub** → הריפו → **Settings** → **Secrets and variables** → **Actions**
-2. הוסף **Repository secrets** (לחץ **New repository secret**):
+---
+
+## שלב 2: משתני סביבה ב-Vercel
+
+**חובה** – בלי זה הבילד ייכשל.
+
+1. Vercel → הפרויקט → **Settings** → **Environment Variables**
+2. הוסף (לכל הסביבות – Production, Preview, Development):
 
 | Name | Value |
 |------|-------|
@@ -17,66 +29,32 @@
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | מפתח anon מ-Supabase (מתחיל ב-`eyJ`) |
 | `NEXT_PUBLIC_APP_URL` | `https://your-app.vercel.app` |
 
-3. **ודא ששמות ה-Secrets מדויקים** – אות גדולה/קטנה חשובה.
-4. **Push** – אחרי הוספת ה-Secrets, בצע push ל-`main` או הרץ את ה-workflow ידנית.
-
-**גם ב-Vercel:** הוסף את אותם משתנים ב-**Settings** → **Environment Variables** (לפריסה הסופית).
-
----
-
-## שלב 1: יצירת פרויקט ב-Vercel
-
-1. היכנס ל-[vercel.com](https://vercel.com) (חינמי עם חשבון GitHub)
-2. לחץ **Add New** → **Project**
-3. ייבא את הריפו מ-GitHub (חבר את חשבון GitHub אם צריך)
-4. **אל תבצע Deploy עכשיו** – נגדיר דרך GitHub Actions. או שתבצע Deploy ראשון כדי ליצור את הפרויקט.
-
-## שלב 2: קבלת מזהי Vercel
-
-1. ב-Vercel: **Settings** → **General**
-2. העתק את **Project ID**
-3. עבור ל-**Account Settings** (פרופיל) → **General** → העתק את **Team/Org ID**
-
-## שלב 3: יצירת Token ב-Vercel
-
-1. [vercel.com/account/tokens](https://vercel.com/account/tokens)
-2. **Create Token** – שם (למשל `github-actions`)
-3. העתק את ה-Token (מוצג פעם אחת בלבד)
-
-## שלב 4: הגדרת GitHub Secrets
-
-ב-GitHub: **Repository** → **Settings** → **Secrets and variables** → **Actions**
-
-הוסף את ה-Secrets הבאים:
-
-| Secret | תיאור |
-|--------|-------|
-| `VERCEL_TOKEN` | ה-Token מ-Vercel |
-| `VERCEL_ORG_ID` | Team/Org ID מ-Vercel |
-| `VERCEL_PROJECT_ID` | Project ID מ-Vercel |
-| `NEXT_PUBLIC_SUPABASE_URL` | כתובת Supabase |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | מפתח anon מ-Supabase |
-| `NEXT_PUBLIC_APP_URL` | כתובת האפליקציה (למשל `https://your-app.vercel.app`) |
+3. **Redeploy** – אחרי הוספת המשתנים, הרץ פריסה מחדש.
 
 **אופציונלי (לשליחת אימייל):**
-| Secret | תיאור |
-|--------|-------|
+| Name | Value |
+|------|-------|
 | `RESEND_API_KEY` | מפתח Resend |
 | `RESEND_FROM_EMAIL` | כתובת השולח |
 
-## שלב 5: הגדרות ב-Supabase
+---
+
+## שלב 3: הגדרות ב-Supabase
 
 1. **Authentication** → **URL Configuration**
 2. **Site URL:** `https://your-app.vercel.app`
 3. **Redirect URLs:** הוסף `https://your-app.vercel.app/**`
 
-## זרימת העבודה
+---
 
-- כל **push** ל-`main` מפעיל את ה-workflow
-- הרצת `npm run lint` ו-`npm run build`
-- פריסה ל-Vercel (Production)
+## GitHub Actions (CI)
 
-## חלופה: פריסה ישירה מ-Vercel
+ה-workflow ב-`.github/workflows/deploy.yml` מריץ **lint** ו-**build** בכל push ל-`main`.  
+זה לא מפריס – הפריסה נעשית על ידי Vercel.
 
-אפשר גם לחבר את הריפו ל-Vercel בלי GitHub Actions – Vercel יפרוס אוטומטית בכל push.  
-ה-workflow הנוכחי מוסיף בדיקות (lint, build) לפני הפריסה.
+**נדרש:** GitHub Secrets (לוולידציית build):
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `NEXT_PUBLIC_APP_URL`
+
+**אם הבילד נכשל עם "משתני סביבה של Supabase לא מוגדרים"** – הוסף את ה-Secrets ב-GitHub: **Settings** → **Secrets and variables** → **Actions**.
