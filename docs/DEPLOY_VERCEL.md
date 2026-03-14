@@ -2,6 +2,28 @@
 
 מדריך להגדרת פריסה אוטומטית בכל push ל-`main`.
 
+---
+
+## ⚠️ חובה: GitHub Secrets (לבילד ב-Actions)
+
+**אם הבילד נכשל עם "משתני סביבה של Supabase לא מוגדרים"** – השגיאה מתרחשת ב-**GitHub Actions** (לא ב-Vercel). הבילד רץ על שרתי GitHub וצריך את ה-Secrets משם.
+
+1. **GitHub** → הריפו → **Settings** → **Secrets and variables** → **Actions**
+2. הוסף **Repository secrets** (לחץ **New repository secret**):
+
+| Name | Value |
+|------|-------|
+| `NEXT_PUBLIC_SUPABASE_URL` | `https://xxx.supabase.co` |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | מפתח anon מ-Supabase (מתחיל ב-`eyJ`) |
+| `NEXT_PUBLIC_APP_URL` | `https://your-app.vercel.app` |
+
+3. **ודא ששמות ה-Secrets מדויקים** – אות גדולה/קטנה חשובה.
+4. **Push** – אחרי הוספת ה-Secrets, בצע push ל-`main` או הרץ את ה-workflow ידנית.
+
+**גם ב-Vercel:** הוסף את אותם משתנים ב-**Settings** → **Environment Variables** (לפריסה הסופית).
+
+---
+
 ## שלב 1: יצירת פרויקט ב-Vercel
 
 1. היכנס ל-[vercel.com](https://vercel.com) (חינמי עם חשבון GitHub)
