@@ -106,6 +106,7 @@ npm run dev
 
 - [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) – הגדרת מסד נתונים
 - [STATUS.md](./STATUS.md) – סטטוס פיתוח
+- [docs/DEPLOY_VERCEL.md](./docs/DEPLOY_VERCEL.md) – פריסה ל-Vercel עם GitHub Actions
 - [docs/](./docs/) – מדריכי התקנה, OAuth, צ'קליסט פריסה ועוד
 
 ## רישיון

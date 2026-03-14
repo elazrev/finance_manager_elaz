@@ -10,10 +10,11 @@
 | [GOOGLE_OAUTH_SETUP.md](./GOOGLE_OAUTH_SETUP.md) | הגדרת התחברות עם Google |
 | [AUTH_SETUP.md](./AUTH_SETUP.md) | סקירת זרימת האימות |
 
-## לפני פריסה
+## פריסה
 
 | קובץ | תיאור |
 |------|-------|
+| [DEPLOY_VERCEL.md](./DEPLOY_VERCEL.md) | פריסה ל-Vercel עם GitHub Actions (כל push מעדכן) |
 | [CHECKLIST_PRE_COMMIT.md](./CHECKLIST_PRE_COMMIT.md) | צ'קליסט לפני קומיט ופריסה |
 
 ## תיעוד פנימי
