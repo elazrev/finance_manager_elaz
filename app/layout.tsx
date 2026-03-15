@@ -3,6 +3,7 @@ import { Inter, Rubik } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { LayoutSwitcher } from "@/components/layout/layout-switcher";
+import { PWARegister } from "@/components/pwa-register";
 
 const inter = Inter({ subsets: ["latin"] });
 const rubik = Rubik({ subsets: ["hebrew", "latin"] });
@@ -10,6 +11,12 @@ const rubik = Rubik({ subsets: ["hebrew", "latin"] });
 export const metadata: Metadata = {
   title: "אפליקציית ניהול חשבונות - פטור עוסק",
   description: "מערכת ניהול חשבונות פשוטה וקלה לשימוש עבור עוסקים פטורים בישראל",
+  themeColor: "#1e293b",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "מנהל חשבונות",
+  },
 };
 
 const themeInitScript = `
@@ -37,6 +44,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className={`${inter.className} ${rubik.className}`}>
+        <PWARegister />
         <Providers>
           <LayoutSwitcher>{children}</LayoutSwitcher>
         </Providers>
